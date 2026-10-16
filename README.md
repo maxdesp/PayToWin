@@ -4,6 +4,8 @@ A satirical mobile game about pay-to-win. Every mini-game is rigged: you cannot 
 
 Speaks your browser's language when it has a translation (English or French, a full adaptation), English otherwise. Switch any time in Options › Language.
 
+**Play it online: [maxdesp.github.io/PayToWin](https://maxdesp.github.io/PayToWin/)**
+
 ## Run it
 
 Open `index.html` in a browser. No build step, no server.

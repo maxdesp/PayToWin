@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#14072b">
+  <meta name="description" content="">
+  <title>PayToWin</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Texts come from js/i18n/<lang>.js: data-i18n* attributes here, P2W.t() in scripts. -->
+  <main id="app">
+    <section id="screen-menu" class="screen active">
+      <h1 class="logo"><span>PAY</span><span class="logo-to">to</span><span>WIN</span></h1>
+      <p class="tagline" data-bind="tagline"></p>
+      <div class="level-badge" data-bind="badge"></div>
+      <!-- PAY/PLAY pun, English only: never translated. The L blinks out now and then. -->
+      <button class="btn btn-primary btn-xl" data-action="play" aria-label="Play">P<span class="play-l" aria-hidden="true">L</span>AY</button>
+      <div class="menu-row">
+        <button class="btn btn-ghost btn-tile" data-action="levels"><span>🗺️</span><i data-i18n="menu.levels"></i></button>
+        <button class="btn btn-ghost btn-tile" data-action="trophies"><span>🏅</span><i data-i18n="menu.trophies"></i></button>
+        <button class="btn btn-ghost btn-tile" data-action="leaderboards"><span>📊</span><i data-i18n="menu.ranks"></i></button>
+        <button class="btn btn-ghost btn-tile" data-action="stats"><span>⏱️</span><i data-i18n="menu.stats"></i></button>
+      </div>
+      <p class="fine" data-bind="spent"></p>
+      <p class="fine" data-i18n="menu.footer"></p>
+      <div class="menu-foot">
+        <button class="btn btn-ghost" data-action="options" data-i18n="menu.options"></button>
+        <!-- Quiet layer: label set by pause.js, in the quiet language. -->
+        <button class="btn-quiet" data-action="behind"></button>
+      </div>
+    </section>
+
+    <section id="screen-game" class="screen"></section>
+
+    <section id="screen-gameover" class="screen">
+      <h1 class="go-title" data-i18n="gameover.title"></h1>
+      <p class="go-taunt" data-bind="taunt"></p>
+      <div class="go-score"><span data-bind="score">0</span><small data-i18n="gameover.points"></small></div>
+      <p class="go-best" data-bind="best"></p>
+      <button class="btn btn-p2w" data-action="paytowin" data-i18n="gameover.payToWin"></button>
+      <button class="btn btn-ghost" data-action="retry" data-bind="retry"></button>
+      <button class="btn btn-ghost btn-menu" data-action="menu" data-i18n="common.menuHome"></button>
+    </section>
+
+    <section id="screen-leaderboards" class="screen">
+      <h2 class="lb-title" data-i18n="leaderboards.title"></h2>
+      <div class="tabs" role="tablist">
+        <button class="tab active" role="tab" data-tab="scores" data-i18n="leaderboards.scores"></button>
+        <button class="tab" role="tab" data-tab="payers" data-i18n="leaderboards.payers"></button>
+      </div>
+      <ol class="board" id="board"></ol>
+      <p class="fine" data-bind="boardNote"></p>
+      <button class="btn btn-ghost" data-action="menu" data-i18n="common.back"></button>
+    </section>
+
+    <section id="screen-levels" class="screen">
+      <h2 class="lb-title" data-i18n="levels.title"></h2>
+      <p class="fine" data-i18n="levels.intro"></p>
+      <div class="tabs" role="tablist" id="level-filters">
+        <button class="tab" role="tab" data-lv-filter="unlocked" data-i18n="levels.filters.unlocked"></button>
+        <button class="tab" role="tab" data-lv-filter="locked" data-i18n="levels.filters.locked"></button>
+        <button class="tab active" role="tab" data-lv-filter="all" data-i18n="levels.filters.all"></button>
+      </div>
+      <ol class="board lv-list" id="level-list"></ol>
+      <button class="btn btn-ghost" data-action="menu" data-i18n="common.back"></button>
+    </section>
+
+    <section id="screen-trophies" class="screen">
+      <h2 class="lb-title" data-i18n="trophies.title"></h2>
+      <p class="ach-intro" data-i18n="trophies.intro"></p>
+      <div class="ach-stats">
+        <span><b data-bind="achCount">0/0</b><i data-i18n="trophies.owned"></i></span>
+        <span><b data-bind="zero">$0.00</b><i data-i18n="trophies.totalValue"></i></span>
+        <span><b>0%</b><i data-i18n="trophies.skill"></i></span>
+      </div>
+      <ol class="board" id="trophy-list"></ol>
+      <p class="fine" data-i18n="trophies.footer"></p>
+      <button class="btn btn-ghost" data-action="menu" data-i18n="common.back"></button>
+    </section>
+
+    <section id="screen-stats" class="screen">
+      <h2 class="lb-title" data-i18n="stats.title"></h2>
+      <p class="fine" data-i18n="stats.intro"></p>
+      <div class="st-body" id="stats-body"></div>
+      <button class="btn btn-ghost" data-action="menu" data-i18n="common.back"></button>
+    </section>
+
+    <section id="screen-plans" class="screen">
+      <h2 class="lb-title" data-i18n="plans.title"></h2>
+      <p class="fine" data-i18n="plans.intro"></p>
+      <div class="st-body" id="plans-body"></div>
+      <button class="btn btn-ghost" data-action="plansBack" data-i18n="common.back"></button>
+    </section>
+
+    <section id="screen-history" class="screen">
+      <h2 class="lb-title" data-i18n="history.title"></h2>
+      <p class="fine" data-i18n="history.intro"></p>
+      <div class="st-body" id="history-body"></div>
+      <button class="btn btn-minor btn-small" data-action="refund" data-i18n="menu.refund" hidden></button>
+      <button class="btn btn-ghost" data-action="options" data-i18n="common.back"></button>
+    </section>
+
+    <section id="screen-options" class="screen">
+      <h2 class="lb-title" data-i18n="options.title"></h2>
+      <p class="fine" data-i18n="options.intro"></p>
+      <div class="st-body" id="options-body"></div>
+      <button class="btn btn-ghost" data-action="menu" data-i18n="common.back"></button>
+    </section>
+
+    <section id="screen-about" class="screen">
+      <h2 class="lb-title" data-i18n="about.title"></h2>
+      <div class="st-body" id="about-body"></div>
+      <button class="btn btn-ghost" data-action="options" data-i18n="common.back"></button>
+    </section>
+  </main>
+
+  <div id="overlay-paywall" class="overlay overlay-sheet" hidden></div>
+  <div id="overlay-refund" class="overlay overlay-sheet" hidden></div>
+  <div id="overlay-unsubscribe" class="overlay overlay-sheet" hidden></div>
+  <div id="overlay-bug" class="overlay overlay-bug" hidden></div>
+  <div id="overlay-ad" class="overlay overlay-ad" hidden></div>
+  <div id="overlay-processing" class="overlay" hidden></div>
+  <div id="overlay-celebration" class="overlay" hidden></div>
+  <div id="toasts" aria-live="polite"></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <!-- Quiet layer (pause.js, learn.js): above everything, including toasts and confetti. -->
+  <div id="overlay-quiet" class="overlay overlay-quiet" hidden></div>
+
+  <!-- Plain scripts (no modules) so index.html works straight from file:// -->
+  <script src="js/i18n/i18n.js"></script>
+  <script src="js/i18n/en.js"></script>
+  <script src="js/i18n/fr.js"></script>
+  <script src="js/core/util.js"></script>
+  <script src="js/core/storage.js"></script>
+  <script src="js/core/achievements.js"></script>
+  <script src="js/core/pricing.js"></script>
+  <script src="js/core/sfx.js"></script>
+  <script src="js/core/clock.js"></script>
+  <script src="js/games/registry.js"></script>
+  <script src="js/games/tap-rush.js"></script>
+  <script src="js/games/stack-cash.js"></script>
+  <script src="js/games/pump-dump.js"></script>
+  <script src="js/games/close-popup.js"></script>
+  <script src="js/games/energy-rush.js"></script>
+  <script src="js/games/loot-box.js"></script>
+  <script src="js/games/clicker-capitalist.js"></script>
+  <script src="js/games/break-the-bank.js"></script>
+  <script src="js/ui/paywall.js"></script>
+  <script src="js/ui/celebration.js"></script>
+  <script src="js/ui/leaderboards.js"></script>
+  <script src="js/ui/levels.js"></script>
+  <script src="js/ui/trophies.js"></script>
+  <script src="js/ui/stats.js"></script>
+  <script src="js/ui/about.js"></script>
+  <script src="js/ui/refund.js"></script>
+  <script src="js/ui/history.js"></script>
+  <script src="js/ui/options.js"></script>
+  <script src="js/ui/ads.js"></script>
+  <script src="js/ui/plans.js"></script>
+  <script src="js/ui/unsubscribe.js"></script>
+  <script src="js/ui/accidental-win.js"></script>
+  <script src="js/ui/pause.js"></script>
+  <script src="js/ui/learn.js"></script>
+  <script src="js/core/app.js"></script>
+</body>
+</html>

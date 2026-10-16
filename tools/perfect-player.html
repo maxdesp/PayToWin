@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Perfect Player</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body { display: flex; gap: 16px; padding: 16px; overflow: auto; }
+    #stage { position: relative; flex: none; width: 380px; height: 680px; overflow: hidden; border: 1px solid #555; }
+    #report { flex: 1; min-width: 320px; font: 13px/1.4 ui-monospace, monospace; }
+    #report h1 { font: 800 20px system-ui, sans-serif; margin-bottom: 8px; }
+    #report table { border-collapse: collapse; margin: 8px 0; }
+    #report td, #report th { padding: 3px 8px; border-bottom: 1px solid #333; text-align: left; }
+    .ok { color: #3ddc84; }
+    .fail { color: #ff2e88; font-weight: 900; }
+    button { font: inherit; padding: 6px 12px; margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <!-- The game renders here, at phone size. Runs use a simulated clock: no real waiting. -->
+  <div id="stage"><div id="screen-game" class="screen active"></div></div>
+  <div id="report">
+    <h1>🤖 Perfect Player</h1>
+    <p>Omniscient bots play every mini-game. Each game must be lost, every time, even by them.</p>
+    <p>
+      <button id="run">Run all</button>
+      <label>Runs per case <input id="runs" type="number" value="5" min="1" max="50" style="width:4em"></label>
+    </p>
+    <div id="out"></div>
+  </div>
+
+  <script src="../js/i18n/i18n.js"></script>
+  <script src="../js/i18n/en.js"></script>
+  <script src="../js/core/util.js"></script>
+  <script src="../js/games/registry.js"></script>
+  <script src="../js/games/tap-rush.js"></script>
+  <script src="../js/games/stack-cash.js"></script>
+  <script src="../js/games/pump-dump.js"></script>
+  <script src="../js/games/close-popup.js"></script>
+  <script src="../js/games/energy-rush.js"></script>
+  <script src="../js/games/loot-box.js"></script>
+  <script src="../js/games/clicker-capitalist.js"></script>
+  <script src="../js/games/break-the-bank.js"></script>
+  <script src="perfect-player.js"></script>
+</body>
+</html>

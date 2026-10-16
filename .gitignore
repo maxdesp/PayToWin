@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Node / tooling (future packaging, e.g. Capacitor)
+node_modules/
+dist/
+build/
+.cache/
+*.log
+npm-debug.log*
+
+# Mobile packaging (Capacitor)
+android/
+ios/
+
+# Env / secrets
+.env
+.env.*
